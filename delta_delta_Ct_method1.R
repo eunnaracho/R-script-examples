@@ -104,7 +104,7 @@ while(n1!=0){
   a <- as.numeric(hk_Cq[hk_Cq$Plate==plate[np2,] & hk_Cq$Chemical==hk_Cq_chem[n1,] & hk_Cq$Concentration==hk_Cq_conc[n1,], "Avg_Cq"])
   GOI_delta[GOI_delta$Plate==plate[np2,] & GOI_delta$Chemical==hk_Cq_chem[n1,] & GOI_delta$Concentration==hk_Cq_conc[n1,],"delta"] <- GOI_delta[GOI_delta$Plate==plate[np2,] & GOI_delta$Chemical==hk_Cq_chem[n1,] & GOI_delta$Concentration==hk_Cq_conc[n1,],"Avg_Cq"] - a
 
-#Calculate standard error on delta
+#Calculate and propagate standard error on delta
   while(n2!=0){
     if(num_plate!=1){
       while(num_plate!=0){
@@ -183,7 +183,7 @@ while(n>0 & n2>0){
   }
 }
 
-#Calculate standard error on delta-delta
+#Calculate and propagate standard error on delta-delta
 n <- nrow(genes)
 n1 <- nrow(hk_Cq_chem)
 num_plate <- nrow(plate)
