@@ -54,7 +54,7 @@ write.csv(dat, paste0(time, "_dat_", paste0(exp_plate, collapse = "_"),"_", exp,
 
 colnames(dat)[colnames(dat)=="Exp_plate"] <- "Plate"
 
-#Average Cq and calculate standard error in Cq
+#Average Cq and calculate standard error on Cq
 stderr_Cq <- dat %>%
   subset(select = -c(Well)) %>%
   group_by(Plate, Chemical, Gene, Concentration) %>%
