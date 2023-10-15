@@ -45,7 +45,7 @@ dat <- dplyr::left_join(dat, sampledat)
 
 ##########Recurrent mutation analysis##########
 
-#Filter out all mutations observed in the same position in 2 or more samples at Variant allele frequency (VAF) <= 0.01
+#Filter all mutations observed in the same position in 2 or more samples at Variant allele frequency (VAF) <= 0.01
 recurrent_removed <- dat %>%
   filter(filter != "EndRepairFillInArtifact" & filter != "EndRepairFillInArtifact,v2" & filter != "EndRepairFillInArtifact,NM8.0,v2" & filter != "EndRepairFillInArtifact,NM8.0") %>%
   filter(VAF <= 0.01) %>%
