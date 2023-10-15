@@ -167,6 +167,7 @@ recur_mut_per_samp2 <- recur_mut_spec_per_samp %>%
 
 write.csv(recur_mut_per_samp2, paste0(chemical, "_Recurrent mutation by subtype in each samples.csv"))
 
+#Plot the recurrent mutations by sample
 ggsave(filename = paste0(chemical,"_Recurrent mut spec by sample_VC.pdf"),
        ggplot(data = recur_mut_per_samp2, mapping = aes(x = subtype, y = percentage, fill = subtype)) + 
          geom_bar(stat = "identity") + 
@@ -230,6 +231,7 @@ ggsave(filename = paste0(chemical,"_Unique snv by subtype.pdf"),
 
 #Mutations by the number of recurrence
 #Group mutations by the number of recurrence in the dataset 
+
 recur_distribution <- dplyr::select(recurrent_mut_all, subtype, sample, dose, recurrence)
 
 recur_distribution <- convert_AG_subtype(recur_distribution)
