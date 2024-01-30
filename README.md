@@ -7,3 +7,5 @@ The script is currently in use for quickly processing qPCR data and visualizing 
 
 ## Recurrent mutation analysis for Duplex Sequencing data
 
+## ANOVA and post-hoc tests for MicroFlow assay data
+This script processes the output of 96-well MicroFlow assay, a flow cytometry-based micronucleus (MN) assay. It calculates the standard deviation and error on MN frequency at each concentration, relative survival based on nuclei-to-counting bead ratio, and performs ANOVA followed by Dunnett or Tukey post-hoc analysis to determine the statistical significance of the changes in MN frequency in treated vs vehicle control samples. Relative survival and MN frequency are then plotted with statistical significance marked with asterisks. 
