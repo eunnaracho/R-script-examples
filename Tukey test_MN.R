@@ -10,13 +10,16 @@ data <- read_xlsx("C:/Users/EUCHO/Desktop/4NQO DS paper/4NQO_MN_1.xlsx")
 ###############################################
 #Data summary
 
+#Calculate nuclei-counting bead ratio
 data <- data %>%
   mutate(bead_ratio = Nuclei/Beads)
 
+#Calculate average values within each concentration group
 Avg_data <- data %>%
   group_by(Dose) %>%
   summarise_all(mean)
 
+#Calculate standard deviation on MN frequency
 MN_stdev <- data %>%
   select(Dose, 'MN%', bead_ratio)
 
@@ -26,8 +29,10 @@ MN_stdev <- MN_stdev %>%
   group_by(Dose) %>%
   summarise(MN_stdev = sd(MN_ratio, na.rm=TRUE)/sqrt(n()), bead_stdev = sd(bead_ratio, na.rm=TRUE))
 
+#Merge std dev data frame with averaged data
 Avg_data <- dplyr::left_join(Avg_data, MN_stdev)
 
+#Calculate relative survival using the n-to-b ratios
 bead_ctrl <- Avg_data$Nuclei[1]/Avg_data$Beads[1]
 bead_ctrl_stdev <- MN_stdev$bead_stdev[1]
 
@@ -40,7 +45,7 @@ Avg_data$Dose <- as.character(Avg_data$Dose)
 relsur_stdev <- as.data.frame(Avg_data$bead_stdev/bead_ctrl_stdev)
 
 ######################################################
-#Dunnetts Test
+#Post-hoc Dunnett's Test
 
 MN_dunnetts <- DunnettTest(x=data$`MN%`, g=data$Dose)
  
@@ -76,7 +81,7 @@ dun_signif <- select(MN_dunnetts, Dose, label)
 write_csv(MN_dunnetts,"C:/Users/EUCHO/Desktop/4NQO DS paper/4NQO_MN_Dunnetts.csv")
 
 ######################################################
-#ANOVA with Tukey post-hoc
+#ANOVA with post-hoc Tukey test
 
 MN_anova <- aov(formula = data$'MN%' ~ factor(data$Dose), data = data)
 summary(MN_anova)
@@ -106,7 +111,7 @@ MN_Tukey
 write_csv(MN_Tukey,"C:/Users/EUCHO/Desktop/4NQO DS paper/4NQO_MN_Tukey.csv")
 
 ################################################
-#Plot
+#Plot MN and relative survival with statistical significance
 
 Avg_data <- dplyr::left_join(Avg_data, dun_signif) %>%
   mutate(fill = "% RS", colour = "% MN")
